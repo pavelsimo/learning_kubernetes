@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
     centos_master.vm.hostname = "master"
     centos_master.vm.provision "shell", inline: "nmcli connection reload; systemctl restart network.service"        
     centos_master.vm.provider "virtualbox" do |vb|      
-      vb.memory = "128"
+      vb.memory = "512"
       vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
     end    
   end
@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
     centos_node1.vm.hostname = "node1"
     centos_node1.vm.provision "shell", inline: "nmcli connection reload; systemctl restart network.service"        
     centos_node1.vm.provider "virtualbox" do |vb|      
-      vb.memory = "128"
+      vb.memory = "512"
       vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
     end        
   end
@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
     centos_node2.vm.hostname = "node2"
     centos_node2.vm.provision "shell", inline: "nmcli connection reload; systemctl restart network.service"    
     centos_node2.vm.provider "virtualbox" do |vb|      
-      vb.memory = "128"
+      vb.memory = "512"
       vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
     end        
   end
