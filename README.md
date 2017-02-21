@@ -44,3 +44,51 @@ Starting the etcd and Kubernetes services (master)
 
     systemctl enable etcd kube-apiserver kube-controller-manager kube-scheduler
     systemctl start etcd kube-apiserver kube-controller-manager kube-scheduler
+
+Configure the Kubernete Master (all nodes)
+
+    vi /etc/kubernetes/config
+    KUBE_ETCD_SERVERS="--etcd-servers=http://master:2379"
+
+Configure the kubelet (all nodes)
+
+    vi /etc/kubernetes/kubelet
+    KUBELET_ADDRESS="--address=0.0.0.0"
+    KUBELET_PORT="--port=10250"
+    KUBELET_HOSTNAME="--hostname-override=node1"
+    KUBELET_API_SERVER="--api-servers=http://master:8080"
+    # KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
+
+Starting kube-proxy, kubelete and docker (all nodes)
+
+    systemctl enable kube-proxy kubelet docker
+    systemctl start kube-proxy kubelet docker
+    systemctl status kube-proxy kubelet docker | grep "(running)" | wc -l
+
+Verify docker is running
+
+    docker images
+    docker --version
+
+Pull docker hello-world image
+
+    docker pull hello-world
+    docker run hello-world
+
+See nodes register to the kubernetes cluster
+
+    kubectl get nodes
+    # docs
+    man kubectl-get
+
+See nodes information
+
+    kubectl describe nodes
+
+Query nodes information
+
+    ** TODO: Copy commands from LA: Kubectl Exploring our Environment 7:21
+
+See pods
+
+    kubectl get pods
