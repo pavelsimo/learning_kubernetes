@@ -4,8 +4,8 @@ Vagrant.configure("2") do |config|
     centos_master.vm.box = "bento/centos-7.2"
     centos_master.vm.network "private_network", ip: "10.0.0.10"
     centos_master.vm.hostname = "master"
-    centos_master.vm.network :forwarded_port, guest: 8080, host: 8080
-    centos_master.vm.network :forwarded_port, guest: 2379, host: 2379 
+    # centos_master.vm.network :forwarded_port, guest: 8080, host: 8080
+    # centos_master.vm.network :forwarded_port, guest: 2379, host: 2379 
     centos_master.vm.provider "virtualbox" do |vb|      
       vb.memory = "512"
       vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
