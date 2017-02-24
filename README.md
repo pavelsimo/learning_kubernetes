@@ -116,9 +116,17 @@ Creating a POD
 
     kubectl create -f ./nginx.yaml
 
+Deleting a POD
+
+    kubectl delete pod busybox
+
 Obtain POD information
 
     kubectl describe pod nginx
+
+Query PODs by APP name
+
+    kubectl get pods -l app=myapp_name
 
 Workaround for the GFW (all nodes)
 
@@ -126,6 +134,41 @@ Workaround for the GFW (all nodes)
     # Notice that the version of the pause-amd64 may differ in your version of
     # Kubernetes in this case is version 3.0
     docker tag docker.io/kubernetes/pause gcr.io/google_containers/pause-amd64:3.0
+
+Query Deployments
+
+    kubectl get deployments
+    kubectl describe deployments -l app=nginx-deployment-dev
+
+Update a Deployment
+
+    kubectl apply -f nginx-deployment-dev-update.yaml
+
+See Deployment Information
+
+    kubectl describe deployments nginx-deployment-dev
+
+Query the Replication Controller
+
+    kubectl describe replicationcontroller
+
+Delete Replication Controller
+
+    kubectl delete replicationcontroller nginx
+
+Query Services
+
+    kubectl get services
+
+Run a POD on the fly
+
+    kubectl run busybox --image=busybox --restart=Never --tty -i --generator=run-pod/v1
+
+Forward POD port to the MASTER
+
+    # kubernetes will assign a random available port to the nginx service
+    # NOTE: nginx is running in port 80
+    kubectl port-forward nginx :80 
 
 Basic Docker commands
 
