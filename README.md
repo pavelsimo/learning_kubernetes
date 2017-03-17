@@ -26,7 +26,7 @@ Installing etcd (master only)
 
     yum install -y --enablerepo=virt7-docker-common-release etcd
 
-Configure the Kubernetes Master
+Configure the etcd server (master only)
 
     vi /etc/kubernetes/config
     KUBE_MASTER="--master=http://master:8080"   
@@ -170,6 +170,12 @@ Forward POD port to the MASTER
     # NOTE: nginx is running in port 80
     kubectl port-forward nginx :80 
 
+Delete all pods, deployments and persistent volumes
+
+	kubectl delete deployments --all
+	kubectl delete pvc --all
+    kubectl get pods | tail -n+2 | cut -d' ' -f1 | xargs kubectl delete pod	
+	
 Basic Docker commands
 
     docker info
@@ -253,3 +259,6 @@ Checking container logs
 
     docker logs sharp_elion
 
+Delete all containers
+
+    docker ps -a | cut -d' ' -f1 | tail -n+2 | xargs docker rm
