@@ -17,6 +17,9 @@ $RUNDIR/install-ntpd.sh
 # install kubernetes repo
 $RUNDIR/install-k8s-repo.sh
 
+# install etcd
+$RUNDIR/install-etcd.sh
+
 # install kubernetes
 $RUNDIR/install-k8s.sh
 
