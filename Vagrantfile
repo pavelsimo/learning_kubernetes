@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
     # centos_master.vm.synced_folder ".", "/vagrant", disabled: true
     centos_master.vm.provider "virtualbox" do |vb|      
       vb.memory = "512"
-      vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+      # vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
     end
     centos_master.vm.provision "shell", inline: "cp /vagrant/install/* /root && chmod +x /root/*"
   end
@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
     # centos_node1.vm.synced_folder ".", "/vagrant", disabled: true
     centos_node1.vm.provider "virtualbox" do |vb|      
       vb.memory = "512"
-      vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+      # vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
     end
     centos_node1.vm.provision "shell", inline: "cp /vagrant/install/* /root && chmod +x /root/*"
   end
@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
     # centos_node2.vm.synced_folder ".", "/vagrant", disabled: true
     centos_node2.vm.provider "virtualbox" do |vb|      
       vb.memory = "512"
-      vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+      # vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
     end
     centos_node2.vm.provision "shell", inline: "cp /vagrant/install/* /root && chmod +x /root/*"     
   end
