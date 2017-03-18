@@ -55,3 +55,9 @@ EOF
 ###############################################################################
 systemctl enable kube-proxy kubelet
 systemctl start kube-proxy kubelet
+
+###############################################################################
+# Kubernetes workaround for the GFW 
+###############################################################################
+docker pull kubernetes/pause
+docker tag docker.io/kubernetes/pause gcr.io/google_containers/pause-amd64:3.0

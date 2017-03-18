@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "512"
       vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
     end
-    # centos_master.vm.provision "shell", inline: "nmcli connection reload; systemctl restart network.service"
+    centos_master.vm.provision "shell", inline: "cp /vagrant/install/* /root && chmod +x /root/*"
   end
 
   config.vm.define "node1" do |centos_node1|
@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "512"
       vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
     end
-    # centos_node1.vm.provision "shell", inline: "nmcli connection reload; systemctl restart network.service"
+    centos_node1.vm.provision "shell", inline: "cp /vagrant/install/* /root && chmod +x /root/*"
   end
 
   config.vm.define "node2" do |centos_node2|
@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "512"
       vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
     end
-    # centos_node2.vm.provision "shell", inline: "nmcli connection reload; systemctl restart network.service"     
+    centos_node2.vm.provision "shell", inline: "cp /vagrant/install/* /root && chmod +x /root/*"     
   end
   
 end
