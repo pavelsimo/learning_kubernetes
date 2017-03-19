@@ -152,13 +152,13 @@ Query the Replication Controller
 
     kubectl describe replicationcontroller
 
+Get replication controllers
+
+    kubectl get replicationcontroller
+
 Delete Replication Controller
 
     kubectl delete replicationcontroller nginx
-
-Query Services
-
-    kubectl get services
 
 Run a POD on the fly
 
@@ -172,93 +172,78 @@ Forward POD port to the MASTER
 
 Delete all pods, deployments and persistent volumes
 
-	kubectl delete deployments --all
-	kubectl delete pvc --all
-    kubectl get pods | tail -n+2 | cut -d' ' -f1 | xargs kubectl delete pod	
-	
-Basic Docker commands
+    kubectl delete deployments --all
+    kubectl delete pvc --all
+    kubectl get pods | tail -n+2 | cut -d' ' -f1 | xargs kubectl delete pod
 
-    docker info
-    docker version
+Deploy Kubernetes Dashboard
+
+    # 
+    # https://kubernetes.io/docs/user-guide/ui/
+    # http://localhost:8001/ui
+    # 
+    kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+    kubectl proxy
+
+Query Services
+
+    kubectl get services
+
+Describe Services
+
+    kubectl describe service nginx-service
+
+Delete Service
+
+    kubectl delete service nginx-service
+
+Run busybox Pod
+
+    kubectl run busybox --generator=run-pod/v1 --image=busybox --restart=Never --tty -i
+
+Create Temporary Pods
+
+    kubectl run mysample --image=latest123/apache
+
+Create Temporary Pods Replicas
+
+    kubectl run myreplicas --image=hello-world --replicas=2 --labels=app=hw,version=1.0
+    kubectl run myautoscale --image=latest123/apache --port=80 --labels=app=myautoscale
+
+Execute a Command within a Pod 
+
+    # running the date command
+    kubectl exec nginx-pod date
+
+    # checking a configuration file
+    kubectl exec nginx-pod cat /etc/nginx/conf.d/default.conf
+
+Login to a Container
+
+    kubectl exec nginx-pod -i -t -- /bin/bash
+
+Query the POD logs
+
+    # https://kubernetes.io/docs/user-guide/kubectl/kubectl_logs/
     
-    # location where docker images live
-    # /var/lib/docker/image
-    # /var/lib/docker/image/devicemapper/imagedb/content/sha256
-
-    # location where docker container lives
-    # /var/lib/docker/containers
-
-    # pull ubuntu xenial
-    docker pull ubuntu:xenial
-    docker pull nginx:latest
-
-    # -i interactive mode
-    # -t attached to my terminal (tty)
-    docker run -i -t ubuntu:xenial /bin/bash
-
-    # restart docker container
-    docker restart awesome_sinoussi
-
-    # inspect images
-    docker inspect ubuntu:xenial
-
-    # attach to the container
-    docker attach awesome_sinoussi
-
-    # -i interactive mode
-    # -t attached to my terminal (tty)
-    # -d demonized
-    docker run -itd ubuntu:xenial /bin/bash
-
-    # obtain container specific information
-    docker inspect reverent_thompson
-
-    # start a container
-    docker start focused_kilby
-
-    # stop a container
-    docker stop reverent_thompson
-
-    # search docker images
-    docker search ubuntu
-    docker search training/sinatra
-
-    # remove docker image
-    docker rmi training/sinatra
+    kubectl logs myapache
+    kubectl logs --tail=1 myapache
     
-Build a docker image
+    # logs in the last 24 hours
+    kubectl logs --since=24h myapache
 
-    FROM centos:latest
-    MAINTAINER pavel.simo@gmail.com
-    RUN useradd -m -s /bin/bash user
-    USER user
+    # same as tail -f
+    kubectl logs -f myapache
 
-    docker build -t centos7/nonroot:v1 .
-    docker run -it centos7/noroot:v1 /bin/bash
+Autoscaling PODS
 
-Connect to a container as root
+    # minimum 2 pods, maximum 6 pods
+    kubectl autoscale deployment myautoscale --min=2 --max=6
 
-    docker exec -u 0 -it focused_kilby /bin/bash
+Overwriting the Autoscale rules
 
-Running nginx in docker
+    # scaling up
+    kubectl scale --current-replicas=2 --replicas=4 deployment/myautoscale
 
-    docker pull nginx:latest
-    docker run -d nginx:latest
-
-    # This way of running redirect the local port 80 to the container port 80
-    docker run -d -p 80:80 nginx:latest
-    elinks http://172.17.0.3
-    
-    # host -> 8080, container -> 80
-    docker run -d -p 8080:80 nginx:latest
-    elinks http://127.0.0.1:8080
-    elinks http://172.17.0.3
-
-
-Checking container logs
-
-    docker logs sharp_elion
-
-Delete all containers
-
-    docker ps -a | cut -d' ' -f1 | tail -n+2 | xargs docker rm
+    # scaling down
+    kubectl scale --current-replicas=4 --replicas=2 deployment/myautoscale
