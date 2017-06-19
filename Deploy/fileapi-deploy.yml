@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: fileapi-deploy
+spec:
+  replicas: 3
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: fileapi
+    spec:
+      containers:
+      - name: fileapi-pod
+        image: centos7/fileapi:v1
+        env:
+        - name: "ENGINE"
+          value: "DEFAULT"
+        - name: "MAX_WORKERS"
+          value: "5"
+        ports:
+        - containerPort: 50051

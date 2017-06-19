@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: fileapi-svc
+spec:
+  selector:
+    app: fileapi
+  ports:
+    - protocol: TCP
+      port: 50051
+      nodePort: 30226
+  type: NodePort
