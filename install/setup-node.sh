@@ -25,6 +25,9 @@ $RUNDIR/install-k8s.sh
 # install docker
 $RUNDIR/install-docker.sh
 
+# install flannel
+$RUNDIR/install-flannel.sh
+
 ###############################################################################
 # Configuring the kubelet
 ###############################################################################
